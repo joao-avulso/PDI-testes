@@ -134,6 +134,23 @@ def gama():
     except ValueError:
         print("Por favor, insira um número válido.")
 
+def equalizar():
+    global imagem_cv, imagem_tk_processada
+    if imagem_cv is not None:
+        try:
+            imagem_cv = cv.cvtColor(imagem_cv, cv.COLOR_RGB2GRAY)
+        except:
+            pass
+        imagem_processada = op.equalizar(imagem_cv).astype('uint8')
+        imagem_pil = Image.fromarray(imagem_processada)
+        imagem_tk_processada = ImageTk.PhotoImage(imagem_pil)
+        label_imagem_processada.config(image=imagem_tk_processada)
+        label_imagem_processada.image = imagem_tk_processada
+        imagem_pil = Image.fromarray(imagem_cv)
+        imagem_tk = ImageTk.PhotoImage(imagem_pil)
+        label_imagem_original.config(image=imagem_tk)
+        label_imagem_original.image = imagem_tk
+
 # Função para alternar o modo fullscreen
 def toggle_fullscreen(event=None):
     root.attributes("-fullscreen", not root.attributes("-fullscreen"))
@@ -187,6 +204,8 @@ maxf_campo.grid(row=5, column=2, padx=10, pady=5)
 t_campo = criar_botao_num1(frame, "Limiar", limiar, 6, 0)
 
 gama_campo = criar_botao_num1(frame, "Gama", gama, 7, 0)
+
+criar_botao(frame, "Equalizar", equalizar, 8, 0)
 
 # Labels para mostrar a imagem original e processada
 label_imagem_processada = tk.Label(root)

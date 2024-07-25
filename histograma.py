@@ -9,6 +9,7 @@ def histogram(img):
     vet_256[:len(count_vet)] = count_vet
     return vet_256
 
+    
 def func_constante(x, c):
     return c
 constante = np.vectorize(func_constante)
@@ -41,28 +42,10 @@ def gama(img, gama):
     result = np.power(img.astype(np.uint64), gama)
     return normalizar(result, 0, result.max())
 
-# carregar imagem
-# img = cv.imread('890841.jpg')
-
-# converter para escala de cinza
-# gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
-
-# plot
-# img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-# modified_img = constante(img, 0).astype(np.uint8)
-# figure, axis = plt.subplots(2, 2)
-# h1 = histogram(img)
-# h2 = histogram(modified_img)
-# arange = np.arange(256)
-# axis[0,0].bar(arange, h1)
-# axis[0,1].bar(arange, h2)
-# axis[1,0].imshow(img)
-# axis[1,0].axis('off')
-# axis[1,1].imshow(modified_img)
-# axis[1,1].axis('off')
-
-# manager = plt.get_current_fig_manager()
-# manager.full_screen_toggle()
-
-# plt.show()
+def equalizar(img):
+    m, n = img.shape
+    hist = histogram(img)
+    hacc = np.cumsum(hist)
+    aux_func = np.vectorize(lambda x: int((k*hacc[x])/(m*n)))
+    return aux_func(img)
 
