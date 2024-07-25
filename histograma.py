@@ -9,7 +9,6 @@ def histogram(img):
     vet_256[:len(count_vet)] = count_vet
     return vet_256
 
-    
 def func_constante(x, c):
     return c
 constante = np.vectorize(func_constante)
@@ -43,9 +42,11 @@ def gama(img, gama):
     return normalizar(result, 0, result.max())
 
 def equalizar(img):
-    m, n = img.shape
+    global idx
+    m, n = img.shape[:2]
     hist = histogram(img)
     hacc = np.cumsum(hist)
     aux_func = np.vectorize(lambda x: int((k*hacc[x])/(m*n)))
     return aux_func(img)
 
+imgs = cv.imread('Lenna.png')
